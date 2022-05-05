@@ -5,7 +5,7 @@ import akka.event.Logging.DebugLevel
 import play.api.libs.json.{Format, Json}
 
 // tutaj możemy dodać parametry do zwracania
-case class QueensSolution(rows: Array[Int])
+case class QueensSolution(solutions: Array[Array[Int]])
 // to jest uniwersalne
 object QueensSolution {
   implicit val format: Format[QueensSolution] = Json.format
@@ -31,7 +31,11 @@ object Main {
     // Lepiej tak i jakiś fetch() w JS zrobić
     // obsługa tylko GET, parametry w connParams.params
     println(connParams.params)
-    val body = Json.toJson(QueensSolution(Array(0, 1, 2, 3, 4, 5, 6, 7))).toString()
+
+    var solutions = Array[Array[Int]]()
+    solutions = solutions :+ Array(0, 1, 2, 3, 4, 5, 6, 7)
+
+    val body = Json.toJson(QueensSolution(solutions)).toString()
     RouteData("application/json", body)
   }
 

@@ -1,9 +1,25 @@
-<link rel="stylesheet" href="style.css" />
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf8"/>
+        <link rel="stylesheet" href="style.css">
+        <script src="Cell.js"></script>
+        <script src="Queens.js"></script>
+    </head>
 
-<h1>hello world</h1>
-<img src="Figure_1.png" alt="Figure 1" />
-
-<form method="GET" action="queens">
-<input name="test" />
-<input type="submit" />
-</form>
+    <body>
+        <div id="root">
+            <div id="table"></div>
+            <button id="send" class="btn">Wyślij</button>
+            <div class="warn" id="warn_double">
+                Wiele hetmanów w jednej kolumnie!
+            </div>
+            <div class="warn" id="warn_too_few">
+                Za mało hetmanów
+            </div>
+            <div class="warn" id="warn_too_many">
+                Za dużo hetmanów
+            </div>
+        </div>
+    </body>
+</html>

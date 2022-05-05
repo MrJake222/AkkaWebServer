@@ -15,7 +15,8 @@ class WebClientActor extends Actor with ActorLogging {
     "css" -> "text/css",
     "png" -> "image/png",
     "jpg" -> "image/jpeg",
-    "jpeg" -> "image/jpeg"
+    "jpeg" -> "image/jpeg",
+    "js" -> "text/javascript"
   )
 
   override def receive: Actor.Receive = {
