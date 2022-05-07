@@ -1,5 +1,5 @@
 body {
-    background-color: #30302f;
+    background-color: #30302f; /* dałbym #fff */
 }
 
 #root {
@@ -38,7 +38,7 @@ body {
 }
 
 .hoverCell:hover {
-    background-color: #606263;
+    background-color: #606263; /* dałbym #cacaca */
 }
 
 .queen {
