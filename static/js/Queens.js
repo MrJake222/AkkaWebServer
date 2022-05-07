@@ -8,6 +8,7 @@ let solutionTable = document.getElementById("solutionTable")
 let send = document.getElementById("send")
 let rightSolution = document.getElementById("rightSolution")
 let leftSolution = document.getElementById("leftSolution")
+let solutionIndex = document.getElementById("solutionIndex")
 
 send.onclick = () => sendData()
 
@@ -121,6 +122,7 @@ function rightClick() {
 }
 
 function renderSolution() {
+    solutionIndex.innerText = `Rozwiązanie ${currentIndex+1} z ${solutions.length}`
     solutionCells.forEach(cell => {
         cell.show(solutions[currentIndex][cell.x] == cell.y)
     })
