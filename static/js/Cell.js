@@ -5,10 +5,9 @@ class Cell {
         
         this.div = document.createElement("div")
         this.div.className = "cell"
-        this.div.onclick = () => this.click()
-        
+
         this.img = document.createElement("img")
-        this.img.src = "queen.png"
+        this.img.src = "images/queen.png"
         this.img.className = "queen"
         this.show(false)
         this.div.appendChild(this.img)
@@ -17,10 +16,6 @@ class Cell {
     show(showed) {
         this.img.style.display = showed ? "block" : "none"
         this.showed = showed
-    }
-
-    click() {
-        this.show(!this.showed)
     }
 
     serialize() {

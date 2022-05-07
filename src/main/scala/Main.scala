@@ -6,6 +6,7 @@ import play.api.libs.json.{Format, Json}
 
 // tutaj możemy dodać parametry do zwracania
 case class QueensSolution(solutions: Array[Array[Int]])
+
 // to jest uniwersalne
 object QueensSolution {
   implicit val format: Format[QueensSolution] = Json.format
@@ -34,7 +35,10 @@ object Main {
 
     var solutions = Array[Array[Int]]()
     solutions = solutions :+ Array(0, 1, 2, 3, 4, 5, 6, 7)
+    solutions = solutions :+ Array(7, 6, 5, 4, 3, 2, 1, 0)
+    solutions = solutions :+ Array(5, 1, 6, 2, 4, 7, 3, 0)
 
+    solutions
     val body = Json.toJson(QueensSolution(solutions)).toString()
     RouteData("application/json", body)
   }

@@ -18,7 +18,7 @@ class WebServer(val port: Int, val system: ActorSystem, val staticPath: String) 
       val cSock: Socket = sock.accept()
       val actorName = getActorName(cSock)
 
-      val clientActor = system.actorOf(Props[WebClientActor], name=actorName)
+      val clientActor = system.actorOf(Props[WebClientActor], name = actorName)
       clientActor ! Connection(cSock, staticPath, routes)
     }
   }
