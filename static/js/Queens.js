@@ -94,6 +94,8 @@ async function sendData() {
         solutions = resp.solutions
         console.log("sol", solutions)
 
+        show(document.getElementById("warn_no_solution"), solutions.length == 0)
+
         // TODO tutaj może być wiele rozwiązań albo żadnego
         if (solutions.length != 0) {
             currentIndex = 0
