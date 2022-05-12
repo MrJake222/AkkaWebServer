@@ -35,9 +35,6 @@ object Main {
     println(connParams.params)
 
     var solutions = Array[Array[Int]]()
-    //        solutions = solutions :+ Array(0, 1, 2, 3, 4, 5, 6, 7)
-    //        solutions = solutions :+ Array(7, 6, 5, 4, 3, 2, 1, 0)
-    //        solutions = solutions :+ Array(5, 1, 6, 2, 4, 7, 3, 0)
 
     val y_vals = connParams.params.values.toList.map(x => x.toInt)
     val x_vals = connParams.params.keys.toList.map(x => x.toInt)

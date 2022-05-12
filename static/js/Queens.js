@@ -21,13 +21,19 @@ for (let y = 0; y < 8; y++) {
 
     for (let x = 0; x < 8; x++) {
         let cell = new ClickableCell(y, x)
+        if (y % 2 === 0 && x % 2 === 0)
+            cell.setDivColor("whiteCell")
+        else if (y % 2 === 1 && x % 2 === 1)
+            cell.setDivColor("whiteCell")
+        else
+            cell.setDivColor("blackCell")
         cell.div.classList.add("hoverCell")
         cells.push(cell)
         row.appendChild(cell.div)
 
-        if (y == SETTING[x]) {
-            cell.show(true)
-        }
+        // if (y === SETTING[x]) {
+        //     cell.show(true)
+        // }
     }
 }
 
@@ -38,6 +44,12 @@ for (let y = 0; y < 8; y++) {
 
     for (let x = 0; x < 8; x++) {
         let cell = new Cell(y, x)
+        if (y % 2 === 0 && x % 2 === 0)
+            cell.setDivColor("whiteCell")
+        else if (y % 2 === 1 && x % 2 === 1)
+            cell.setDivColor("whiteCell")
+        else
+            cell.setDivColor("blackCell")
         solutionCells.push(cell)
         row.appendChild(cell.div)
     }
@@ -53,61 +65,81 @@ async function fetchSolution(queens) {
 }
 
 async function sendData() {
-
-    let queens = {}
-    let good = true
-    let keys = 0
+    let numberOfQueens = 0
+    let xs = []
+    let ys = []
 
     cells.forEach(cell => {
         if (cell.showed) {
-            console.log(queens)
-            if (queens[cell.x] !== undefined) {
-                good = false
-            }
-            queens[cell.x] = cell.y
-            keys++
+            xs.push(cell.x)
+            ys.push(cell.y)
+            numberOfQueens++
         }
     })
 
-    show(document.getElementById("warn_double"), !good)
-    show(document.getElementById("warn_too_many"), keys > 8)
+    show(document.getElementById("warn_no_solution"), false)
+    const rowDuplicates = xs.some((e, i, arr) => arr.indexOf(e) !== i)
+    const columnDuplicates = ys.some((e, i, arr) => arr.indexOf(e) !== i)
+    const crossDuplicates = checkCrossDuplicates(ys, xs)
+    const tooManyQueens = numberOfQueens > 8
 
-    if (keys > 8) {
-        good = false
-    }
+    show(document.getElementById("warn_double_col"), columnDuplicates)
+    show(document.getElementById("warn_double_row"), rowDuplicates)
+    show(document.getElementById("warn_double_cross"), crossDuplicates)
+    show(document.getElementById("warn_too_many"), tooManyQueens)
 
-    if (good) {
+    if (!tooManyQueens && !rowDuplicates && !columnDuplicates && !crossDuplicates) {
+        let queens = {}
+        for(let i = 0; i <numberOfQueens; i++)
+            queens[xs[i]] = ys[i]
         console.log("sending", queens)
-        // let setting = []
-        // for (let x=0; x<8; x++) {
-        //     if (queens[x] !== undefined) {
-        //         setting[x] = queens[x]
-        //     }
-        //     else {
-        //         setting[x] = -1
-        //     }
-        // }
-
-        // console.log(setting)
 
         let resp = await fetchSolution(queens)
         solutions = resp.solutions
-        console.log("sol", solutions)
+        console.log(solutions)
 
-        show(document.getElementById("warn_no_solution"), solutions.length == 0)
+        show(document.getElementById("warn_no_solution"), solutions.length === 0)
 
         // TODO tutaj może być wiele rozwiązań albo żadnego
-        if (solutions.length != 0) {
+        if (solutions.length !== 0) {
             currentIndex = 0
             renderSolution()
             rightSolution.addEventListener("click", rightClick)
             leftSolution.addEventListener("click", leftClick)
+            for (let i = 0; i < cells.length; i++) {
+                if (cells[i].showed)
+                    solutionCells[i].addEmphasis()
+                else
+                    solutionCells[i].deleteEmphasis()
+            }
         } else {
             currentIndex = null
             rightSolution.removeEventListener("click", rightClick)
             leftSolution.removeEventListener("click", leftClick)
+            emptySolutions()
+        }
+    } else
+        emptySolutions()
+}
+
+function checkCrossDuplicates(ys, xs) {
+    for (let i = 0; i < ys.length; i++) {
+        for (let j = i + 1; i < ys.length; i++) {
+            let y_diff = Math.abs(ys[i] - ys[j])
+            let x_diff = Math.abs(xs[i] - xs[j])
+            if (y_diff !== 0 && y_diff === x_diff)
+                return true
         }
     }
+    return false
+}
+
+function emptySolutions() {
+    solutionCells.forEach(cell => {
+        cell.show(false)
+        cell.deleteEmphasis()
+    })
+    solutionIndex.innerText = ""
 }
 
 function leftClick() {
@@ -124,8 +156,8 @@ function rightClick() {
 }
 
 function renderSolution() {
-    solutionIndex.innerText = `Rozwiązanie ${currentIndex+1} z ${solutions.length}`
+    solutionIndex.innerText = `Rozwiązanie ${currentIndex + 1} z ${solutions.length}`
     solutionCells.forEach(cell => {
-        cell.show(solutions[currentIndex][cell.x] == cell.y)
+        cell.show(solutions[currentIndex][cell.x] === cell.y)
     })
 }

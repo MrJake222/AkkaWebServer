@@ -18,6 +18,18 @@ class Cell {
         this.showed = showed
     }
 
+    setDivColor(color){
+        this.div.classList.add(color)
+    }
+
+    addEmphasis(){
+        this.div.classList.add("constQueen")
+    }
+
+    deleteEmphasis(){
+        this.div.classList.remove("constQueen")
+    }
+
     serialize() {
         return this.y + "x" + this.x + ": " + this.showed
     }
