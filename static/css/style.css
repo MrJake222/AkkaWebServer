@@ -11,14 +11,17 @@ body {
 #problem, #solution {
     height: fit-content;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex: 1;
     padding: 10px;
 }
 
-#problem {
-    flex-direction: column;
+#allSolutions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .row {
