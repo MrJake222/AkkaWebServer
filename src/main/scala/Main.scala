@@ -1,7 +1,7 @@
 package httpqueens
 
 import akka.actor.ActorSystem
-import akka.event.Logging.DebugLevel
+import akka.event.Logging.{InfoLevel, DebugLevel}
 import play.api.libs.json.{Format, Json}
 
 case class QueensSolution(solutions: Array[Array[Int]])
@@ -14,7 +14,7 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val system: ActorSystem = ActorSystem("MySystem")
-    system.eventStream.setLogLevel(DebugLevel)
+    system.eventStream.setLogLevel(InfoLevel)
 
     val server: WebServer = new WebServer(PORT, system, "static")
 
