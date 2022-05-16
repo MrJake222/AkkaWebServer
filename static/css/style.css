@@ -84,6 +84,8 @@ button {
 #solutionIndex {
     text-align: center;
     font-size: 24px;
+    color: #e3e3e3;
+    margin-top: 10px;
 }
 
 #leftSolution, #rightSolution{
